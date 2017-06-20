@@ -1,54 +1,39 @@
 package com.example.rohit.mainapp;
 
 
-import android.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity implements BaseFragment.OnFragmentInteractionListener{
-    Button b1;
-public  int click=0;
-     //  ragmentTransaction fragmentTransaction=getFragmentManager.;
+
+    BaseFragment baseFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        b1 = (Button) findViewById(R.id.button);
-b1.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        BaseFragment baseFragment= new BaseFragment();
-        android.app.FragmentTransaction fragmentTransaction= getFragmentManager().beginTransaction();
+        baseFragment = new BaseFragment();
+        android.support.v4.app.FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.app_fragment,baseFragment).setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .hide(baseFragment).commit();
+    }
 
-        fragmentTransaction.replace(R.id.app_fragment,baseFragment);
-     //   fragmentTransaction.setCustomAnimations(android.R.animator.fade_in,android.R.animator.fade_out);
-        switch (click){
-            case 0:
-                click=1;
-                fragmentTransaction.show(baseFragment);
-            case 1:
-                click=0;
+    public void onLaunch(View v) {
 
-                fragmentTransaction.hide(baseFragment);
-
-                break;
-
+        if (baseFragment.isVisible()) {
+            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.hide(baseFragment).commit();
+        } else if (!baseFragment.isVisible()) {
+            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.show(baseFragment).commit();
         }
-fragmentTransaction.commit();
 
     }
-});
 
-     //   b1.setOnClickListener(but);
-
-    }
     @Override
     public void onFragmentInteraction(int position) {
 

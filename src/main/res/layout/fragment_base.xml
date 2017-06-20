@@ -11,8 +11,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/apps_grid"
-    android:numColumns="3"
-    >
+    android:numColumns="3">
 
 </GridView>
 
